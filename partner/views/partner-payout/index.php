@@ -40,16 +40,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Amount',
-                'format' => 'raw',
+                'format' => 'text',
                 'value' => function ($data) {
                     return Yii::$app->formatter->asCurrency($data->amount, 'KWD',[ \NumberFormatter::MIN_FRACTION_DIGITS => 4, \NumberFormatter::MAX_FRACTION_DIGITS => 4 ]);
                 }
             ],
             [
                 'label' => 'Status',
-                'format' => 'raw',
+                'format' => 'text',
                 'value' => function ($data) {
-                    return $data->status;
+                    return (string) ($data->status ?? '');
                 }
             ],
         ],
