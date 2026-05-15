@@ -113,7 +113,7 @@ class OrderCest
 
         $I->wantTo('Validate order > status update webhook api');
         $I->sendPOST('v2/order/status-update-webhook', [
-            "webhook_token" => "2125bf59e5af2b8c8b5e8b3b19f13e1221",
+            "webhook_token" => getenv('MASHKOR_WEBHOOK_TOKEN') ?: 'test-mashkor-webhook-token',
             "order_number" => $order->mashkor_order_number
         ]);
         $I->seeResponseCodeIs(HttpCode::OK); // 200

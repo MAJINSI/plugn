@@ -1668,6 +1668,7 @@ class OrderController extends BaseController
 
         $mashkor_order_number = Yii::$app->request->getBodyParam("order_number");
         $mashkor_secret_token = Yii::$app->request->getBodyParam("webhook_token");
+        $configured_mashkor_token = getenv('MASHKOR_WEBHOOK_TOKEN') ?: '';
 
         if (!$mashkor_order_number) {
             return [
@@ -1676,7 +1677,7 @@ class OrderController extends BaseController
             ];
         }
 
-        if ($mashkor_secret_token === '2125bf59e5af2b8c8b5e8b3b19f13e1221') {
+        if ($configured_mashkor_token && hash_equals($configured_mashkor_token, (string) $mashkor_secret_token)) {
 
             $order_model = Order::find()
                 ->where(['mashkor_order_number' => $mashkor_order_number])
@@ -1728,7 +1729,9 @@ class OrderController extends BaseController
 
         } else {
 
-            //Yii::error('[Mashkor (Webhook): Error while changing order status ]' . json_encode($order_model->getErrors()), __METHOD__);
+            if (!$configured_mashkor_token) {
+                Yii::error('[Mashkor (Webhook): MASHKOR_WEBHOOK_TOKEN is not configured]', __METHOD__);
+            }
 
 
             return [
