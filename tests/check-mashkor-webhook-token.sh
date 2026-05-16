@@ -7,7 +7,7 @@ if rg -n "mashkor_secret_token\\s*={2,3}\\s*['\"][^'\"]{20,}['\"]" api docs comm
   exit 1
 fi
 
-if rg -n "\"webhook_token\"\\s*=>\\s*\"[0-9a-f]{32,}\"" api/tests; then
+if rg -n "['\"]webhook_token['\"]\\s*=>\\s*['\"][0-9a-f]{32,}['\"]" api/tests; then
   echo "Mashkor webhook tests must not commit real-looking token fixtures." >&2
   exit 1
 fi
