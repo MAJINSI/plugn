@@ -117,6 +117,10 @@ class OrderCest
             "order_number" => $order->mashkor_order_number
         ]);
         $I->seeResponseCodeIs(HttpCode::OK); // 200
+        $I->seeResponseContainsJson([
+            'operation' => 'success'
+        ]);
+        $I->dontSeeResponseContains('Failed to authorize the request.');
     }
 
     /**
